@@ -1,7 +1,7 @@
 """Invoke tasks."""
 # from txsoundgen.invoke import ns
+import pylint
 from invoke import task
-
 
 @task(
     help={
@@ -17,10 +17,9 @@ def fmt(command, check=False):
 
 
 @task
-def lint(command):
+def lint(command): # pylint: disable=W0613
     """Run lint tests."""
-    command.run("pylint txsoundgen")
-    # pylint.run_pylint(argv=["txsoundgen", "tests", "tasks.py"])
+    pylint.run_pylint(argv=["txsoundgen", "tests", "tasks.py"])
 
 
 @task

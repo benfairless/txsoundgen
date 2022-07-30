@@ -45,6 +45,9 @@ spec_header_format = "[{module_path}] {test_case}:"
 spec_test_format = "{result} {name} : {docstring_summary}"
 addopts = "--spec"
 
+[tool.pylint.reports]
+output-format = "colorized"
+
 [tool.pylint.format]
 # max-line-length = 88
 
