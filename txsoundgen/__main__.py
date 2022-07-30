@@ -1,6 +1,8 @@
-# # import sys
+# import sys
 # import yaml
 import boto3
+
+from txsoundgen.model import Pack
 
 client = boto3.client("polly")
 
@@ -32,7 +34,6 @@ client = boto3.client("polly")
 
 data = {"sounds": {"system": {"1": "Hello"}, "extra": {"weirdlong": "Goodbye"}}}
 
-from txsoundgen.pack import Pack
 
 pack = Pack(data)
 print(pack.list)

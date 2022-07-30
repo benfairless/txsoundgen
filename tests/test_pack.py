@@ -1,14 +1,14 @@
-"""Tests relating to txsoundgen.pack."""
+"""Tests relating to txsoundgen.model.Pack."""
 import os
 import pytest
-from txsoundgen.pack import Pack
-from txsoundgen.model import Sound
+
+import txsoundgen.model
 
 
 @pytest.fixture(name="pack")
 def fixture_pack():
     """Valid Pack object."""
-    return Pack({})
+    return txsoundgen.model.Pack({})
 
 
 def test_pack_format_filename(pack):
@@ -39,7 +39,9 @@ def test_pack_convert_list(pack):
         errors.append("Valid key")
     if not "conver" in converted:
         errors.append("Converted key")
-    if "conver" in converted and not isinstance(converted["conver"], Sound):
+    if "conver" in converted and not isinstance(
+        converted["conver"], txsoundgen.model.Sound
+    ):
         errors.append("oo")
     assert not errors, f"Incorrect response for {','.join(errors)}"
 
@@ -47,7 +49,7 @@ def test_pack_convert_list(pack):
 def test_pack_generate(pack):
     """Given a Sound object and configuration, a sound file is generated."""
     file = "test_pack_generate.wav"
-    obj = Sound("test")
+    obj = txsoundgen.model.Sound("test")
     pack._generate(file, obj)  # pylint: disable=W0212
     assert os.path.exists(file) is True
     os.remove(file)

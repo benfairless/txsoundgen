@@ -3,6 +3,7 @@ import os
 import magic
 import pytest
 from botocore.exceptions import BotoCoreError, ClientError
+
 import txsoundgen.audio
 from tests import fixture_client  # pylint: disable=W0611
 
