@@ -166,15 +166,14 @@ class Sound:
         Args:
             client (botocore.client.Polly):
                 A boto3 client object for communicating with the Amazon Polly service.
-            file (string/file-like object): File path to write audio data to.
+            file (str): File path to write audio data to.
 
         Returns:
             str: File path audio was written to.
         """
-        if isinstance(file, str):
-            file = re.sub(
-                r"(?<!\.wav)$", r".wav", file
-            )  # Ensure file ends in '.wav' extension.
+        file = re.sub(
+            r"(?<!\.wav)$", r".wav", str(file)
+        )  # Ensure file ends in '.wav' extension.
         if self.check_cache():
             logger.info('Using cached audio data for "%s"', self.phrase)
         else:
@@ -266,13 +265,14 @@ class Pack:
         path = pathlib.Path(self.path)
         if not path.exists():
             path.mkdir(parents=True)
-            logger.info("Created directory for '%s' voicepack in '%s'", self.name, self.path)
+            logger.info(
+                "Created directory for '%s' voicepack in '%s'", self.name, self.path
+            )
         pathlib.Path(self.packpath).mkdir(parents=True, exist_ok=True)
         for group, __ in self.list.items():
             if group == "extra":
                 group = ""  # Extra sound files are stored in the base path.
             pathlib.Path(os.path.join(self.packpath, group)).mkdir(exist_ok=True)
-
 
     def _process(self, filename: str, sound: Sound):
         """Wrapper for `txsoundgen.model.sound.process()`.
@@ -282,7 +282,6 @@ class Pack:
             sound (txsoundgen.model.Sound): Sound object to process.
         """
         return sound.process(self.client, filename)
-
 
     def readme(self):
         """Returns a Markdown-formatted README.md file for the voicepack."""
