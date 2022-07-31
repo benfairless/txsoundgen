@@ -1,4 +1,4 @@
-"""This sub-module contains low-level utilities used to make things simple.
+"""Sub-module containing low-level utilities used to make things simple.
 
 Contents:
     - `merge_config()` - Merges provided configuration dictionary with default configuration.

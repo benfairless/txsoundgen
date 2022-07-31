@@ -1,5 +1,5 @@
 """
-This sub-module contains objects for the storage, retrieval, and generation of text-to-speech data.
+Sub-module containing objects for the storage, retrieval, and generation of text-to-speech data.
 
 If you are working with txsoundgen programmatically this is probably the main submodule
 you would be interested in interacting with.
@@ -66,7 +66,7 @@ class CachedSound(peewee.Model):
     data = peewee.BlobField(unique=True)
     """Byte data for WAVE-encoded audio file generated based on the phrase and generator config."""
 
-    class Meta:  # pylint: disable=R0903
+    class Meta:
         """Used by to manage database metadata."""
 
         table_name = "sound"

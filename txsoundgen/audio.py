@@ -1,5 +1,4 @@
-"""
-This sub-module contains low level functions for the creation and processing of audio data directly.
+"""Sub-module containing low level functions for the creation and processing of audio data directly.
 
 Contents:
     - `polly_process()` - Manage generation and processing of text-to-speech via Amazon Polly.
