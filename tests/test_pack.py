@@ -1,7 +1,5 @@
 """Tests relating to `txsoundgen.model.Pack`."""
-import os
 import pytest
-
 import txsoundgen.model
 
 # pylint: disable=protected-access
@@ -23,13 +21,12 @@ def fixture_soundlist(pack):
 class TestPack:
     """Tests relating to `txsoundgen.model.Pack`."""
 
-    def test_generate(self, pack):
+    def test_generate(self, pack, tmp_path):
         """Given a Sound object and configuration, a sound file is generated."""
-        file = "test_pack_generate.wav"
+        file = tmp_path.joinpath("test_pack_generate.wav")
         obj = txsoundgen.model.Sound("test")
-        pack._process(file, obj)
-        assert os.path.exists(file) is True
-        os.remove(file)
+        pack._process(str(file), obj)
+        assert file.exists() is True
 
     class TestFormatFilename:
         """Tests relating to `txsoundgen.model.pack._format_filename()."""

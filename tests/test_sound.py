@@ -1,6 +1,4 @@
 """Tests relating to `txsoundgen.model.Sound`."""
-import os
-
 import txsoundgen.model
 from tests import fixture_client  # pylint: disable=W0611
 
@@ -26,10 +24,9 @@ class TestSound:
         assert test.config["voice"] == "Amy"
         assert test.config["language"] == "en-US"
 
-    def test_process_path(self, client):
+    def test_process_path(self, client, tmp_path):
         """Given a filename without an appropriate extension, '.wav' is added to the filename."""
-        badfile = "test_sound_process_path"
+        badfile = str(tmp_path.joinpath("test_sound_process_path"))
         goodfile = badfile + ".wav"
         test = txsoundgen.model.Sound("Test Sound Process")
         assert test.process(client, badfile) == goodfile
-        os.remove(goodfile)
