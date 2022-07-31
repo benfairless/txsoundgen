@@ -202,17 +202,12 @@ class Pack:
 
     # TODO: Automatically create README.md for voice pack
     # TODO: Add description attribute
-    # TODO: Re-consider how to calculate path
 
     def __init__(self, conf: dict = None):
         self.config = txsoundgen.utils.merge_config(conf)
         self.client = boto3.client("polly")
         self.name = self.config["name"]
         self.list = self._convert_list(self.config.get("sounds", {}))
-
-        # self.prefix = self.config.get('path', f'voicepacks/{self.name}/')
-        # self.basepath = os.environ.get('VOICEPACK_DIR', '.') + '/'
-        # self.path = self.basepath + self.prefix
 
     def _format_filename(self, name: str):
         """Formats filenames to ensure they are compatible with OpenTX/EdgeTX firmware.
@@ -250,13 +245,15 @@ class Pack:
         output = {}
         for group, content in sound_list.items():
             content_list = {}
+            if group == "system":
+                group = group.upper()  # "SYSTEM" directory is expected to be uppercase.
             for name, phrase in content.items():
                 key = self._format_filename(name)
                 content_list[key] = Sound(phrase, config=self.config)
             output[group] = content_list
         return output
 
-    def _generate(self, filename: str, sound: Sound):
+    def _process(self, filename: str, sound: Sound):
         """Wrapper for `txsoundgen.model.sound.process()`.
 
         Args:
@@ -264,6 +261,7 @@ class Pack:
             sound (txsoundgen.model.Sound): Sound object to process.
         """
         return sound.process(self.client, filename)
+
 
     # def process(self):
     #     pathlib.Path(self.path).mkdir(parents=True, exist_ok=True)

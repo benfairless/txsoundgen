@@ -5,14 +5,20 @@ import txsoundgen.model
 from tests import fixture_client  # pylint: disable=W0611
 
 
-def test_sound_creation(client):
-    """When the sound.render method is called, the object has a .data attribute containing bytes."""
+def test_render(client):
+    """When the `render()` method is called, the object has a .data attribute containing bytes."""
     test = txsoundgen.model.Sound("Test Sound Creation")
     test.render(client)
     assert isinstance(test.data, bytes)
 
 
-def test_sound_config_override():
+def test_phrase():
+    """When the object is referenced, it is represented by the 'phrase' attribute"""
+    test = txsoundgen.model.Sound("Test Phrase")
+    assert repr(test) == "Test Phrase"
+
+
+def test_config_override():
     """Given a config dict, the config is merged correctly."""
     conf = {"language": "en-US"}
     test = txsoundgen.model.Sound("Test Sound Config Override", conf)
@@ -20,7 +26,7 @@ def test_sound_config_override():
     assert test.config["language"] == "en-US"
 
 
-def test_sound_process_path(client):
+def test_process_path(client):
     """Given a filename without an appropriate extension, '.wav' is added to the filename."""
     badfile = "test_sound_process_path"
     goodfile = badfile + ".wav"
