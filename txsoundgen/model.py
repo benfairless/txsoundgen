@@ -9,6 +9,8 @@ Contents:
     - `Sound` - Generate WAVE-encoded audio data and store it to file, or use cached data.
     - `Pack` - Voice pack interface, for the creation of multiple sound files as a 'voice pack'.
 """
+import os
+import pathlib
 import logging
 import re
 
@@ -200,16 +202,22 @@ class Sound:
 class Pack:
     """Voice pack interface, for the creation of multiple sound files as a 'voice pack'."""
 
-    # TODO: Automatically create README.md for voice pack
     # TODO: Add description attribute
 
-    def __init__(self, conf: dict = None):
-        self.config = txsoundgen.utils.merge_config(conf)
+    def __init__(self, config: dict = None):
+        self.config = txsoundgen.utils.merge_config(config)
         self.client = boto3.client("polly")
-        self.name = self.config["name"]
+        self.name = self._format_filename(self.config["name"], safe_length=32)
         self.list = self._convert_list(self.config.get("sounds", {}))
 
-    def _format_filename(self, name: str):
+        prefix = "voicepacks"
+        lang = re.sub(
+            r"(?:-.*)", "", self.config["language"]
+        )  # Strips localisation from language name.
+        self.path = os.path.join(prefix, self.name)
+        self.packpath = os.path.join(self.path, "SOUNDS", "language", lang)
+
+    def _format_filename(self, name: str, safe_length: int = 6):
         """Formats filenames to ensure they are compatible with OpenTX/EdgeTX firmware.
 
         Strips any characters that are not alphanumeric, '_', or '-' and then reduces
@@ -217,12 +225,12 @@ class Pack:
         EdgeTX / OpenTX requirements.
 
         Args:
-            name (str): Incoming filename
+            name (str): Incoming filename.
+            safe_length(int): Maximum length filename is permitted to be.
 
         Returns:
-            str: Formatted filename
+            str: Formatted filename.
         """
-        safe_length = 6  # Firmware only supports filenames up to six characters.
         pattern = re.compile(r"[^a-z0-9_-]+")
         safe_name = pattern.sub("", name.lower())[0:safe_length]
         if safe_name != name:
@@ -253,6 +261,19 @@ class Pack:
             output[group] = content_list
         return output
 
+    def _setup(self):
+        """Creates directory structure for voicepack."""
+        path = pathlib.Path(self.path)
+        if not path.exists():
+            path.mkdir(parents=True)
+            logger.info("Created directory for '%s' voicepack in '%s'", self.name, self.path)
+        pathlib.Path(self.packpath).mkdir(parents=True, exist_ok=True)
+        for group, __ in self.list.items():
+            if group == "extra":
+                group = ""  # Extra sound files are stored in the base path.
+            pathlib.Path(os.path.join(self.packpath, group)).mkdir(exist_ok=True)
+
+
     def _process(self, filename: str, sound: Sound):
         """Wrapper for `txsoundgen.model.sound.process()`.
 
@@ -262,6 +283,20 @@ class Pack:
         """
         return sound.process(self.client, filename)
 
+
+    def readme(self):
+        """Returns a Markdown-formatted README.md file for the voicepack."""
+        description = "This is my soundpack."
+        includes_default = True
+        doc = f"""
+{self.name.capitalize()} soundpack
+{"=" * (len(self.name) + 10)}
+
+{description}
+
+The following sounds are included{" (as well as the default sounds)" if includes_default else ""}:
+"""
+        return doc
 
     # def process(self):
     #     pathlib.Path(self.path).mkdir(parents=True, exist_ok=True)
