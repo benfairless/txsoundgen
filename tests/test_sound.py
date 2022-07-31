@@ -1,6 +1,6 @@
 """Tests relating to `txsoundgen.model.Sound`."""
 import txsoundgen.model
-from tests import fixture_client  # pylint: disable=W0611
+from tests import fixture_client  # pylint: disable=unused-import
 
 
 class TestSound:

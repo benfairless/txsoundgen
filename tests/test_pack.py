@@ -2,7 +2,7 @@
 import pytest
 import txsoundgen.model
 
-# pylint: disable=protected-access
+# pylint: disable=protected-access,too-few-public-methods
 
 
 @pytest.fixture(name="pack")
