@@ -84,14 +84,10 @@ def polly_process(client: object, phrase: str, config: dict = None):
     except (BotoCoreError, ClientError) as error:
         logger.critical(error)
         raise error
-    if "AudioStream" in response:
-        with closing(response["AudioStream"]) as stream:
-            output = stream.read()
-            logger.debug('Successfully completed synthesis of "%s"', phrase)
-            return output
-    else:
-        logger.error('Could not stream audio for "%s"', phrase)
-        raise RuntimeError("AWS Polly response did not contain AudioStream key")
+    with closing(response["AudioStream"]) as stream:
+        output = stream.read()
+        logger.debug('Successfully completed synthesis of "%s"', phrase)
+        return output
 
 
 def wave_write(file: str, data: bytes):
