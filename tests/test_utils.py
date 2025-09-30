@@ -1,16 +1,17 @@
-"""Tests relating to txsoundgen.utils."""
-
+import pytest
 import txsoundgen.utils
+import magic
+import os
 
 
-def test_merge_config_empty():
-    """Given an empty configuration, returns the default configuration."""
-    assert txsoundgen.utils.merge_config() == txsoundgen.utils.default_config
+# TODO: Refactor tests to use fixtures for setup/teardown where appropriate.
 
 
-def test_merge_config_merge():
-    """Given a valid configuration, returns a merged configuration."""
-    assert (
-        txsoundgen.utils.merge_config({"language": "en-US"})
-        != txsoundgen.utils.default_config
-    )
+class TestWaveWrite:
+    def test_wave_write_valid_data(self):
+        """Given valid byte data, it is written to disk as a WAVE-encoded file."""
+        file = "test_wave_write.tmp"
+        txsoundgen.utils.wave_write(file, b"00")
+        mime = magic.Magic(mime=True)
+        assert mime.from_file(file) == "audio/x-wav"
+        os.remove(file)

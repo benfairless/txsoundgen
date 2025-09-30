@@ -4,21 +4,14 @@ import os
 import logging
 import coloredlogs
 
+# Load settings from environment variables
+_environment = os.environ.get("TXSOUNDGEN_ENVIRONMENT", "development")
+_loglevel = os.environ.get("TXSOUNDGEN_LOG_LEVEL", "DEBUG").upper()
 
-loglevel = os.environ.get("TXSOUNDGEN_LOG_LEVEL", "DEBUG").upper()
-logger = logging.getLogger(__name__)
-# logger = logging.getLogger()
-logger.setLevel(loglevel)
+# Remove any default handlers
+for handler in logging.root.handlers[:]:
+    logging.root.removeHandler(handler)
 
-# fmt = logging.Formatter('%(asctime)s [%(levelname)s] [%(name)s] %(message)s','%Y-%m-%d %H:%M:%S')
-LOGFORMAT = "%(asctime)s [%(levelname)s] [%(name)s] %(message)s"
-coloredlogs.install(level="DEBUG", logger=logger, fmt=LOGFORMAT)
-# stdout_handler = logging.StreamHandler()
-# stdout_handler.setLevel(loglevel)
-# stdout_handler.setFormatter(fmt)
-# logger.addHandler(stdout_handler)
-
-# https://alexandra-zaharia.github.io/posts/make-your-own-custom-color-formatter-with-python-logging/
-# https://pypi.org/project/coloredlogs/
-
-environment = os.environ.get("TXSOUNDGEN_ENVIRONMENT", "development")
+# Install coloredlogs on the root logger
+_LOGFORMAT = "%(asctime)s [%(levelname)s] [%(name)s] %(message)s"
+coloredlogs.install(level=_loglevel, fmt=_LOGFORMAT)

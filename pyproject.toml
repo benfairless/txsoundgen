@@ -20,9 +20,7 @@ classifiers = [
 requires-python = ">=3.13"
 dependencies = [
     "boto3 (>=1.40.41,<2.0.0)",
-    "peewee (>=3.18.2,<4.0.0)",
     "coloredlogs (>=15.0.1,<16.0.0)",
-    "pyyaml (>=6.0.3,<7.0.0)"
 ]
 
 [dependency-groups]
@@ -37,6 +35,15 @@ dev = [
     "invoke (>=2.2.0,<3.0.0)"
 
 ]
+experimental = [
+    "piper-tts (>=1.3.0,<2.0.0)",
+    "pydub (>=0.25.1,<0.26.0)",
+    "audioop-lts (>=0.2.2,<0.3.0)",
+]
+data = [
+    "pyyaml (>=6.0.3,<7.0.0)",
+    "peewee (>=3.18.2,<4.0.0)"
+]
 
 [project.urls]
 source = "https://github.com/benfairless/txsoundgen"
@@ -46,8 +53,14 @@ issues = "https://github.com/benfairless/txsoundgen/issues"
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.html]
+directory = "htmlcov"
+
 [tool.pytest.ini_options]
-spec_header_format = "[{module_path}] {test_case}:"
+spec_header_format = "[{module_path}]"
 spec_test_format = "{result} {name} : {docstring_summary}"
 addopts = "--spec"
 

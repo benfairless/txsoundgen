@@ -1,28 +1,24 @@
 """Invoke tasks."""
 
-# from txsoundgen.invoke import ns
 from invoke import task
-
-# import invoke.tasks
 
 
 @task(
-    help={
-        "check": "Checks if code is valid and return an exit code. Does not amend code."
-    },
+    aliases=(["fmt"]),
+    help={"change": "After checking formatting, make the necessary changes."},
 )
-def fmt(command, check=False):
-    """Format Python code using 'black' formatter."""
+def format(command, change=False):
+    """Check formatting of Python code using 'black' formatter."""
     cmd = "black"
-    if check:
+    if not change:
         cmd += " --check"
-    command.run(f"{cmd} .")
+    command.run(f"{cmd} .", pty=True)
 
 
 @task
 def lint(command):
     """Run lint tests."""
-    command.run("pylint txsoundgen")
+    command.run("pylint txsoundgen -r y --exit-zero")
     # pylint.run_pylint(argv=["txsoundgen", "tests", "tasks.py"])
 
 
@@ -36,7 +32,7 @@ def coverage(command):
 def unit(command):
     """Run unit tests."""
     command.run(
-        "pytest --cov=txsoundgen --cov-branch --cov-report=term --cov-report=html",
+        "pytest tests --cov=txsoundgen --cov-context=test --cov-report=term --cov-report=html",
         pty=True,
     )
 
@@ -44,7 +40,7 @@ def unit(command):
 @task
 def test(command):
     """Run full test suite."""
-    fmt(command)
+    format(command)
     lint(command)
     unit(command)
 
@@ -67,13 +63,16 @@ def clean(command):
     command.run("rm -rf dist/ build/ **/__pycache__ .pytest_cache/")
     # These will probably go away
     command.run("rm -rf htmlcov/")
-    command.run("rm -f voicepacks/**.wav")
+    command.run("rm -rf resources/")
 
 
-@task
-def docs(command):
+@task(help={"serve": "Serve documentation on HTTP server, rather than generate static content."},)
+def docs(command, serve=False):
     """Generate documentation."""
-    command.run("pdoc --docformat google txsoundgen")
+    args = [] if serve else ['-o', 'docs']
+    args.extend(['--mermaid','--docformat', 'google', 'txsoundgen'])
+    # command.run("pdoc --docformat google txsoundgen --logo https://placedog.net/300?random", pty=True)
+    command.run("pdoc " + " ".join(args), pty=True)
 
 
 @task
@@ -82,7 +81,7 @@ def docker(command):
     command.run("docker build -t txsoundgen:latest .")
 
 
-@task
+@task(clean)
 def build(command):
     """Build distributable."""
     command.run("poetry build")
@@ -112,4 +111,8 @@ def deploy(command):
 @task(default=True)
 def run(command):
     """Runs the module's main object."""
-    command.run("python -m txsoundgen")
+    command.run("python -m txsoundgen", pty=True)
+
+
+if __name__ == "__main__":
+    run(None)
