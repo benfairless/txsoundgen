@@ -73,6 +73,9 @@ def docs(command, serve=False):
     args.extend(['--mermaid','--docformat', 'google', 'txsoundgen'])
     # command.run("pdoc --docformat google txsoundgen --logo https://placedog.net/300?random", pty=True)
     command.run("pdoc " + " ".join(args), pty=True)
+    if not serve:
+        command.run("rm -f docs/index.html")
+        command.run("mv docs/txsoundgen.html docs/index.html")
 
 
 @task
