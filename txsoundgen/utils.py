@@ -4,7 +4,6 @@ Contents:
     - `merge_config()` - Merges provided configuration dictionary with default configuration.
 """
 
-
 default_config = {
     "language": "en-GB",
     "voice": "Amy",

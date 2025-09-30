@@ -1,4 +1,5 @@
 """Tests relating to txsoundgen.pack."""
+
 import os
 import pytest
 from txsoundgen.pack import Pack

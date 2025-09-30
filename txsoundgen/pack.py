@@ -1,9 +1,7 @@
 import os
 import pathlib
-
 import logging
 import re
-
 import boto3
 
 import txsoundgen.utils

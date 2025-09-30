@@ -1,4 +1,5 @@
 """Tests relating to txsoundgen.utils."""
+
 import txsoundgen.utils
 
 

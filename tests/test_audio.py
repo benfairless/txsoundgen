@@ -1,4 +1,5 @@
 """Tests relating to txsoundgen.audio."""
+
 import os
 import magic
 import pytest

@@ -5,6 +5,7 @@ Contents:
     - `CachedSound` - Store and retrive cached audio data.
     - `Sound` - Generate WAVE-encoded audio data and store it to file, or use cached data.
 """
+
 import logging
 import re
 import peewee

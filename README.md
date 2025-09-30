@@ -6,7 +6,7 @@ TXSoundGen
 
 Sound pack generator for EdgeTX/OpenTX radios.
 
-Unhappy with finding sound packs for your radio only to find they are incomplete?
+Unhappy with downloading sound packs for your radio only to find they are incomplete?
 TXSoundgen uses cloud text-to-speech generation to create comprehensive voice packs to
 suit your needs, giving you a consistent voice pack that covers default sounds as well
 as any custom lines you would like to add.
