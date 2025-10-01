@@ -3,7 +3,7 @@
 import logging
 from pydub import AudioSegment
 
-logger = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 def wave_write(
@@ -43,5 +43,5 @@ def wave_write(
     sound.export(
         file, format="wav", bitrate="16k", parameters=["-ar", str(output_rate)]
     )
-    logger.debug('Wrote audio data to "%s"', str(file))
+    _logger.debug('Wrote audio data to "%s"', str(file))
     return file

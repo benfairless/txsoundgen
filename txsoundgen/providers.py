@@ -28,9 +28,13 @@ class Piper:
             Directory to install Piper voice models to. Defaults to 'resources/piper'.
     """
 
-    def __init__(self, install_dir="resources/piper", config=provider_config["piper"]):
+    def __init__(
+        self,
+        config=provider_config["piper"],
+        install_dir="resources/piper",
+    ):
         self._config = config
-        self._install_dir = install_dir or self._config["directory"]
+        self.install_dir = install_dir or self._config["directory"]
 
     def process(self, text, voice=None, language=None):
         """
@@ -55,9 +59,9 @@ class Piper:
 
         # Download the voice model if not already available
         model_id = f"{language}-{voice}-medium"
-        model_path = Path(f"{self._install_dir}/{model_id}.onnx")
+        model_path = Path(f"{self.install_dir}/{model_id}.onnx")
         if not model_path.exists():
-            self.download_voice(model_id, path=self._install_dir)
+            self.download_voice(model_id)
 
         # Perform synthesis
         voicepack = piper.PiperVoice.load(model_path)
@@ -78,7 +82,7 @@ class Piper:
         _logger.info('Successfully completed synthesis of "%s".', text)
         return TXSoundData(response.audio_int16_bytes, sample_rate=response.sample_rate)
 
-    def download_voice(self, model_id, path="."):
+    def download_voice(self, model_id):
         """
         Downloads a voice model for Piper TTS.
 
@@ -94,10 +98,11 @@ class Piper:
         if model_id not in sorted(voices_dict.keys()):
             raise ValueError(f'Voice model "{model_id}" is not available for download.')
 
+        # Download the voice model
         _logger.info('Downloading voice model "%s".', model_id)
-        dir = Path(path)
-        dir.mkdir(parents=True, exist_ok=True)
-        piper.download_voices.download_voice(model_id, download_dir=dir)
+        install_dir = Path(self.install_dir)
+        install_dir.mkdir(parents=True, exist_ok=True)
+        piper.download_voices.download_voice(model_id, download_dir=install_dir)
 
 
 class Polly:

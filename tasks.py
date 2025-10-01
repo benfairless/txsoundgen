@@ -66,11 +66,15 @@ def clean(command):
     command.run("rm -rf resources/")
 
 
-@task(help={"serve": "Serve documentation on HTTP server, rather than generate static content."},)
+@task(
+    help={
+        "serve": "Serve documentation on HTTP server, rather than generate static content."
+    },
+)
 def docs(command, serve=False):
     """Generate documentation."""
-    args = [] if serve else ['-o', 'docs']
-    args.extend(['--mermaid','--docformat', 'google', 'txsoundgen'])
+    args = [] if serve else ["-o", "docs"]
+    args.extend(["--mermaid", "--docformat", "google", "txsoundgen"])
     # command.run("pdoc --docformat google txsoundgen --logo https://placedog.net/300?random", pty=True)
     command.run("pdoc " + " ".join(args), pty=True)
     if not serve:
