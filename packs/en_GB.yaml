@@ -1,0 +1,491 @@
+---
+
+name: default
+config:
+  provider: piper
+  language: en-GB
+  voice: alan
+
+data:
+  system:
+    0000: 0
+    0001: 1
+    0002: 2
+    0003: 3
+    0004: 4
+    0005: 5
+    0006: 6
+    0007: 7
+    0008: 8
+    0009: 9
+    0010: 10
+    0011: 11
+    0012: 12
+    0013: 13
+    0014: 14
+    0015: 15
+    0016: 16
+    0017: 17
+    0018: 18
+    0019: 19
+    0020: 20
+    0021: 21
+    0022: 22
+    0023: 23
+    0024: 24
+    0025: 25
+    0026: 26
+    0027: 27
+    0028: 28
+    0029: 29
+    0030: 30
+    0031: 31
+    0032: 32
+    0033: 33
+    0034: 34
+    0035: 35
+    0036: 36
+    0037: 37
+    0038: 38
+    0039: 39
+    0040: 40
+    0041: 41
+    0042: 42
+    0043: 43
+    0044: 44
+    0045: 45
+    0046: 46
+    0047: 47
+    0048: 48
+    0049: 49
+    0050: 50
+    0051: 51
+    0052: 52
+    0053: 53
+    0054: 54
+    0055: 55
+    0056: 56
+    0057: 57
+    0058: 58
+    0059: 59
+    0060: 60
+    0061: 61
+    0062: 62
+    0063: 63
+    0064: 64
+    0065: 65
+    0066: 66
+    0067: 67
+    0068: 68
+    0069: 69
+    0070: 70
+    0071: 71
+    0072: 72
+    0073: 73
+    0074: 74
+    0075: 75
+    0076: 76
+    0077: 77
+    0078: 78
+    0079: 79
+    0080: 80
+    0081: 81
+    0082: 82
+    0083: 83
+    0084: 84
+    0085: 85
+    0086: 86
+    0087: 87
+    0088: 88
+    0089: 89
+    0090: 90
+    0091: 91
+    0092: 92
+    0093: 93
+    0094: 94
+    0095: 95
+    0096: 96
+    0097: 97
+    0098: 98
+    0099: 99
+    0100: 100
+    0101: 200
+    0102: 300
+    0103: 400
+    0104: 500
+    0105: 600
+    0106: 700
+    0107: 800
+    0108: 900
+    0109: thousand
+    0110: and
+    0111: minus
+    0112: point
+    volt0: volt
+    volt1: volts
+    amp0: amp
+    amp1: amps
+    mamp0: milliamp
+    mamp1: milliamps
+    knot0: knot
+    knot1: knots
+    mps0: meter per second
+    mps1: meters per second
+    fps0: foot per second
+    fps1: feet per second
+    kph0: kilometer per hour
+    kph1: kilometers per hour
+    mph0: mile per hour
+    mph1: miles per hour
+    meter0: meter
+    meter1: meters
+    foot0: foot
+    foot1: feet
+    celsius0: degree celsius
+    celsius1: degrees celsius
+    fahr0: degree fahrenheit
+    fahr1: degrees fahrenheit
+    percent0: percent
+    percent1: percent
+    mamph0: milliamp-hour
+    mamph1: milliamp-hours
+    watt0: watt
+    watt1: watts
+    mwatt0: milli-watt
+    mwatt1: milli-watts
+    db0: D B
+    db1: D B
+    rpm0: r p m
+    rpm1: r p m
+    g0: g
+    g1: g
+    degree0: degree
+    degree1: degrees
+    rad0: radian
+    rad1: radians
+    ml0: millilitre
+    ml1: millilitres
+    founce0: fluid ounce
+    founce1: fluid ounces
+    mlpm0: millilitre per minute
+    mlpm1: millilitres per minute
+    hertz0: hertz
+    hertz1: hertz
+    ms0: milli-second
+    ms1: milli-seconds
+    us0: microsecond
+    us1: microseconds
+    hour0: hour
+    hour1: hours
+    minute0: minute
+    minute1: minutes
+    second0: second
+    second1: seconds
+    0167: point zero
+    0168: point one
+    0169: point two
+    0170: point three
+    0171: point four
+    0172: point five
+    0173: point six
+    0174: point seven
+    0175: point eight
+    0176: point nine
+    midtrim: trim center
+    maxtrim: maximum trim reached
+    mintrim: minimum trim reached
+    timovr1: timer 1 elapsed
+    timovr2: timer 2 elapsed
+    timovr3: timer 3 elapsed
+    lowbatt: transmitter battery low
+    inactiv: inactivity alarm
+    thralert: throttle warning
+    swalert: switch warning
+    eebad: bad eeprom
+    hello: Welcome to EdgeTX
+    rssi_org: RF signal low
+    rssi_red: RF signal critical
+    swr_red: radio antenna defective
+    telemko: telemetry lost
+    telemok: telemetry recovered
+    trainko: trainer signal lost
+    trainok: trainer signal recovered
+    sensorko: sensor lost
+    servoko: servo overload
+    rxko: power overload
+    modelpwr: receiver still connected
+
+  extra:
+    armed: armed
+    disarm: disarmed
+    thrcut: throttle cut
+    thract: throttle active
+    gearup: gear up
+    geardn: gear down
+    flapup: flaps up
+    flapdn: flaps down
+    splrup: spoiler up
+    splrdn: spoiler down
+    trnon: trainer on
+    trnoff: trainer off
+    engoff: engine off
+    tohigh: too high
+    tolow: too low
+    lowbat: low battery
+    crowon: crow on
+    crowof: crow off
+    siglow: rf signal low
+    sigcrt: rf signal critical
+    lq: LQ
+    rfmode: RF mode
+    spdmod: high speed mode active
+    thmmod: thermal mode on
+    nrmmod: normal mode on
+    lnding: landing mode on
+    acro: acro mode on
+    fm-1: flight mode one
+    fm-2: flight mode two
+    fm-3: flight mode three
+    fm-4: flight mode four
+    fm-5: flight mode five
+    fm-6: flight mode six
+    fm-7: flight mode seven
+    fm-8: flight mode eight
+    vrion: vario on
+    vrioff: vario off
+    fm-pwr: flight mode power
+    fm-lnd: flight mode land
+    fm-flt: flight mode float
+    fm-spd: flight mode speed
+    fm-fst: flight mode fast
+    fm-nrm: flight mode normal
+    fm-crs: flight mode cruise
+    fm-acr: flight mode acro
+    fm-rce: flight mode race
+    fm-lch: flight mode launch
+    fm-png: flight mode ping
+    fm-thm: flight mode thermal
+    fm-thl: flight mode thermal left
+    fm-thr: flight mode thermal right
+    fm-stb: flight mode stabilise
+    fm-hor: flight mode horizon
+    fm-ang: flight mode angle
+    fm-id1: flight mode idle up 1
+    fm-id2: flight mode idle up 2
+    ratlow: low rate
+    ratmed: medium rate
+    rathi: high rate
+    takeoff: take off
+    sport: sport
+    pattern: pattern
+    3d: 3D
+    landin: landing
+    idleu1: idle up 1
+    idleu2: idle up 2
+    normod: normal mode
+    bank-0: bank 0
+    bank-1: bank 1
+    bank-2: bank 2
+    bank-3: bank 3
+    headlo: heading lock
+    ratmod: rate mode
+    3d-mod: 3D Mode
+    stabmo: Stabilise Mode
+    on: on
+    off: off
+    buzact: buzzer active
+    crfact: crash-flip active
+    blkact: blackbox active
+    preact: pre-arm active
+    stbmod: stable mode
+    brakon: brakes on
+    brakof: brakes off
+    btfon: butterfly on
+    btfoff: butterfly off
+    flp1: flaps one
+    flp2: flaps two
+    flp3: flaps three
+    flp4: flaps four
+    flp5: flaps five
+    wngswp: wingsweep
+    whlbro: wheelbrakes on
+    whlbrf: wheelbrakes off
+    manmod: manual mode
+    acrmod: acro mode
+    angmod: angle mode
+    hznmod: horizon mode
+    lncmod: launch mode
+    airmod: air mode
+    pitmod: pit mode
+    navcrs: navigation cruise
+    navcsh: navigation course hold
+    navalh: navigation altitude hold
+    navpos: navigation position hold
+    navrth: navigation return to home
+    navwp: navigation waypoint
+    cruise: cruise
+    crshld: course hold
+    althld: altitude hold
+    poshld: position hold
+    rth: return to home
+    waypnt: waypoint
+    manual: manual
+    auto: auto
+    osd: O S D
+    osdprf: O S D profile
+    sxrahd: attitude hold mode
+    sxrman: manual mode
+    sxrsmd: stabiliser mode
+    sxrsof: stabiliser off
+    sxrstb: stabiliser on
+    sxrwr: wind rejection mode
+    turton: turtle mode on
+    turtof: turtle mode off
+    flip: flip
+
+
+
+    # airmd: Air mode
+    # air: Air
+    # acromd: Acro mode
+    # acro: Acro
+    # atti: Attitude
+    # attimd: Attitude mode
+    # arm: Arm
+    # prearm: Pre-arm
+    # armed: Armed
+    # disarm: Disarm
+    # disarmed: Disarmed
+    # angle: Angle mode
+    # battreco: Battery recovered
+    # cinemd: Cine mode
+    # cf: Crossfire
+    # elrs: Express LRS
+    # crs: Cruise
+    # crsmd: Cruise mode
+    # crow-off: Crow off
+    # crow-on: Crow on
+    # disabled: Disabled
+    # elapsed: Elapsed
+    # ezmode: Easy mode
+    # gpsacquir: GPS Acquiring
+    # frstyle: Freestyle
+    # home: Home
+    # rth: Return to home
+    # inactive: In-active
+    # landnow: Land now
+    # land: land
+    # inacalrm: Inactivity alarm
+    # lq: LQ
+    # lq-full: Link Quality
+    # max: Maximum
+    # min: Minimum
+    # default: Default
+    # normal: Normal
+
+
+  # 69	Sixty Nine
+  # alrghty	Alrighty thats something
+  # beastmd	Beast Mode
+  # beast	Beast
+  # battreco	Battery recoverd
+  # cinemode	Cine Mode
+  # cinewhp	Cinewhoop
+  # cf	Crossfire
+  # cf-25mw	Crossfire 25 milliwhatts
+  # cf-100mw	Crossfire 100 milliwhatts
+  # cf-250mw	Crossfire 250 milliwhatts
+  # cf-hgspd	Crossfire high speed
+  # cf-nrspd	Crossfire normal speed
+  # cf-lwspd	Crossfire low speed
+  # cf-org	Crossfire Link Low
+  # cf-red	Crossfire Link Critacal
+  # cf-lost	Crossfire Link Lost
+  # d-setpnt	D Setpoint
+  # d	D
+  # damnyou	Damn you
+  # forgetme	Did you forget about me?
+  # disabled	Disabled
+  # doagain	Do it again... but better
+  # frdmunit	Freedom Units
+  # hardmode	Hard Mode
+  # hyforget	Hey Did you forget about me?
+  # overhere	Hey Hey Im over here
+  # ovrhere2	Hey Im over here
+  # imlonely	Hey Im lonly
+  # hghspdmd	High Speed Mode Active
+  # landmdon	Land Mode On
+  # manic-ha	manic-laughter
+  # mid	Midium
+  # minus	Minus
+  # mission	Mission
+  # negative	Negative
+  # ohman	Ohh... man
+  # kpgoing	OMG It Keeps going
+  # notgood	Ooo thats not good
+  # notgood2	Ooo thats..thats not good
+  # badturtl	Ooo turtle mode thats never good
+  # p	P
+  # position	Position
+  # pwroverl	Power Overload
+  # pullup	Pull Up
+  # ra-an-de	Radio Antenna Defective
+  # reached	Reached
+  # srvoverl	Servo Overload
+  # signalko	Signal Lost
+  # signalok	Signal Recoverd
+  # soaring	soaring
+  # sonbitch	Son of a bitch
+  # space	space
+  # start	Start
+  # started	Started
+  # stop	Stop
+  # telemko	Telemtry Lost
+  # telemok	Telmetry Recoverd
+  # telemko	Telemtry Lost OMG
+  # telemok	Telmetry Recoverd Whooow
+  # thx	Thanks
+  # thrmdon	Thermal mode on
+  # thermal	Thermal
+  # thousand	Thousand
+  # tmrexpir	Timer Expired
+  # toolow	Too Low
+  # toohigh	Too High
+  # toolow2	Too Low
+  # toohigh2	Too High
+  # trainrko	Trainer signal lost
+  # trainrok	Trainer signal recoverd
+  # training	Training
+  # txbatlow	Transmitter battery low
+  # txbatlw2	Transmitter battery low
+  # txbatlw3	Transmitter battery low
+  # variooff	Vario off
+  # varioon	Vario on
+  # waypoint	Waypoint
+  # wpreach	Waypoint reached
+  # quadgone	Wellll.. That quads gone
+  # makepack	Whatever Youre Making The Pack Not Me
+  # whatsave	what a save!
+  # antnnako	Wow Your Antenna Is Really Messed Up
+  # quadison	You know your quad is still powerd up??
+  # learning	You learn anything from that
+  # swflpvid	Your Switches Are Flipped I Got A Video About That You Know
+  # swfliped	Your Switches Are Flipped
+  # trhupvid	Your Throttles Up I Got a Video About That YKnow
+  # thrup	Your Throttles Up
+  # failsafe	Youre about to failsafe...Its up to you...Keep flying if you want
+  # lrnsome	Youre gonna learn something today..hahahaha..
+  # 1	Pit Mode On/Off/Enabled/Disabled
+  # 2	Horizon/Angle Mode
+  # 3	Your battery is pretty low, you should land!
+  # 4	Vtx power level 25mw/100mw/200mw/400mw/500mw/800mw/1w/2w
+  # 5	Pit Mode On/Off
+  # 6	Arm
+  # 7	Arm motors
+  # 8	Blackbox Activate
+  # 9	Pre Arm Activated
+  # 10	Buzzer Active
+  # 11	3D Mode
+  # 12	Expo
+  # 13	Blackbox Off / On
+  # 14	Erase Blackbox

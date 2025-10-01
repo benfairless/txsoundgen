@@ -1,8 +1,11 @@
 """.. include:: ../README.md"""
 
-import os
 import logging
+import os
+
 import coloredlogs
+
+from txsoundgen.client import *
 
 # Load settings from environment variables
 _environment = os.environ.get("TXSOUNDGEN_ENVIRONMENT", "development")

@@ -7,18 +7,19 @@
 build/
 dist/
 
-# Reports
+# Reports / testing
 htmlcov/
+.ruff_cache/
+.pytest_cache/
 .coverage
-.pytest_cache
 
 # Environments
 .venv/
-.env
+.env*
 
 # Project-specific
 *.sqlite
 *.db
 **.wav
-DEVELOPER.md
 resources/
+legacy/

@@ -56,13 +56,13 @@
                                 <a class="variable" href="#TXSoundData.data">data</a>
                         </li>
                         <li>
-                                <a class="variable" href="#TXSoundData.sample_rate">sample_rate</a>
+                                <a class="variable" href="#TXSoundData.rate">rate</a>
                         </li>
                         <li>
-                                <a class="variable" href="#TXSoundData.sample_width">sample_width</a>
+                                <a class="variable" href="#TXSoundData.width">width</a>
                         </li>
                         <li>
-                                <a class="variable" href="#TXSoundData.sample_channels">sample_channels</a>
+                                <a class="variable" href="#TXSoundData.channels">channels</a>
                         </li>
                         <li>
                                 <a class="function" href="#TXSoundData.write_wav">write_wav</a>
@@ -86,51 +86,77 @@
                     <h1 class="modulename">
 <a href="./../txsoundgen.html">txsoundgen</a><wbr>.audio    </h1>
 
-                
+                        <div class="docstring"><p>txsoundgen/audio.py</p>
+</div>
+
                         <input id="mod-audio-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 
                         <label class="view-source-button" for="mod-audio-view-source"><span>View Source</span></label>
 
-                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">txsoundgen.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">wave_write</span>
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="sd">&quot;&quot;&quot;txsoundgen/audio.py&quot;&quot;&quot;</span>
 </span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a>
-</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a>
-</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="k">class</span><span class="w"> </span><span class="nc">TXSoundData</span><span class="p">:</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="sd">    A class to encapsulate audio data and its properties.</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="sd">    Args:</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="sd">        data (bytes):</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="sd">            The raw audio byte data.</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="sd">        sample_rate (int, optional):</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="sd">            The sample rate of the audio data. Defaults to 16000 Hz.</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="sd">        sample_width (int, optional):</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="sd">            The sample width in bytes. Defaults to 2 bytes (16-bit audio).</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="sd">        sample_channels (int, optional):</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="sd">            The number of audio channels. Defaults to 1 (mono).</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">,</span> <span class="n">sample_width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sample_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">=</span> <span class="n">sample_rate</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sample_width</span> <span class="o">=</span> <span class="n">sample_width</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sample_channels</span> <span class="o">=</span> <span class="n">sample_channels</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">pydub</span><span class="w"> </span><span class="kn">import</span> <span class="n">AudioSegment</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="k">class</span><span class="w"> </span><span class="nc">TXSoundData</span><span class="p">:</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to encapsulate audio data and its properties.</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="sd">    Args:</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="sd">        data (bytes):</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="sd">            The raw audio byte data.</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="sd">        sample_rate (int, optional):</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="sd">            The sample rate of the audio data. Defaults to 16000 Hz.</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="sd">        sample_width (int, optional):</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="sd">            The sample width in bytes. Defaults to 2 bytes (16-bit audio).</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="sd">        sample_channels (int, optional):</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="sd">            The number of audio channels. Defaults to 1 (mono).</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">write_wav</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a><span class="sd">        Writes the audio data to a WAVE file.</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a><span class="sd">        Args:</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a><span class="sd">            file (string/file-like object): File path to write audio data to.</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a><span class="sd">        Returns:</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a><span class="sd">            string/file-like object: The file path or file-like object written to.</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>        <span class="k">return</span> <span class="n">wave_write</span><span class="p">(</span>
-</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>            <span class="n">file</span><span class="p">,</span>
-</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>            <span class="n">sample_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_width</span><span class="p">,</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>            <span class="n">sample_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_channels</span><span class="p">,</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>            <span class="n">sample_rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
-</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>        <span class="p">)</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a TXSoundData instance.&quot;&quot;&quot;</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">=</span> <span class="n">rate</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="n">channels</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">write_wav</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Write WAVE-encoded audio data to a file path, or file-like object.</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a><span class="sd">        Creates mono-channel audio audio at 16kHz, which is what is typically supported</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a><span class="sd">        by EdgeTX / OpenTX radios, and is output from audio generated by `Processor`</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a><span class="sd">        objects.</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a><span class="sd">        Args:</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a><span class="sd">            file (string/file-like object):</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a><span class="sd">                File path to write audio data to.</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a><span class="sd">            output_rate (int, optional):</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a><span class="sd">                The sample rate to write the audio data at. Defaults to 16000 Hz.</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a><span class="sd">        Returns:</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a><span class="sd">            string/file-like object: The file path or file-like object written to.</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>        <span class="c1"># Uses ffmpeg via pydub to write the WAV file</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>        <span class="c1"># https://github.com/jiaaro/pydub/blob/master/API.markdown</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>        <span class="n">sound</span> <span class="o">=</span> <span class="n">AudioSegment</span><span class="p">(</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>            <span class="n">sample_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>            <span class="n">frame_rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">,</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>            <span class="n">channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>        <span class="p">)</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>        <span class="n">sound</span><span class="o">.</span><span class="n">export</span><span class="p">(</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>            <span class="n">file</span><span class="p">,</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>            <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">,</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>            <span class="n">bitrate</span><span class="o">=</span><span class="s2">&quot;16k&quot;</span><span class="p">,</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>            <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;-ar&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">output_rate</span><span class="p">)],</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a>        <span class="p">)</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>        <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Wrote audio data to &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>        <span class="k">return</span> <span class="n">file</span>
 </span></pre></div>
 
 
@@ -146,47 +172,65 @@
 
     </div>
     <a class="headerlink" href="#TXSoundData"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="TXSoundData-5"><a href="#TXSoundData-5"><span class="linenos"> 5</span></a><span class="k">class</span><span class="w"> </span><span class="nc">TXSoundData</span><span class="p">:</span>
-</span><span id="TXSoundData-6"><a href="#TXSoundData-6"><span class="linenos"> 6</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="TXSoundData-7"><a href="#TXSoundData-7"><span class="linenos"> 7</span></a><span class="sd">    A class to encapsulate audio data and its properties.</span>
-</span><span id="TXSoundData-8"><a href="#TXSoundData-8"><span class="linenos"> 8</span></a>
-</span><span id="TXSoundData-9"><a href="#TXSoundData-9"><span class="linenos"> 9</span></a><span class="sd">    Args:</span>
-</span><span id="TXSoundData-10"><a href="#TXSoundData-10"><span class="linenos">10</span></a><span class="sd">        data (bytes):</span>
-</span><span id="TXSoundData-11"><a href="#TXSoundData-11"><span class="linenos">11</span></a><span class="sd">            The raw audio byte data.</span>
-</span><span id="TXSoundData-12"><a href="#TXSoundData-12"><span class="linenos">12</span></a><span class="sd">        sample_rate (int, optional):</span>
-</span><span id="TXSoundData-13"><a href="#TXSoundData-13"><span class="linenos">13</span></a><span class="sd">            The sample rate of the audio data. Defaults to 16000 Hz.</span>
-</span><span id="TXSoundData-14"><a href="#TXSoundData-14"><span class="linenos">14</span></a><span class="sd">        sample_width (int, optional):</span>
-</span><span id="TXSoundData-15"><a href="#TXSoundData-15"><span class="linenos">15</span></a><span class="sd">            The sample width in bytes. Defaults to 2 bytes (16-bit audio).</span>
-</span><span id="TXSoundData-16"><a href="#TXSoundData-16"><span class="linenos">16</span></a><span class="sd">        sample_channels (int, optional):</span>
-</span><span id="TXSoundData-17"><a href="#TXSoundData-17"><span class="linenos">17</span></a><span class="sd">            The number of audio channels. Defaults to 1 (mono).</span>
-</span><span id="TXSoundData-18"><a href="#TXSoundData-18"><span class="linenos">18</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="TXSoundData-19"><a href="#TXSoundData-19"><span class="linenos">19</span></a>
-</span><span id="TXSoundData-20"><a href="#TXSoundData-20"><span class="linenos">20</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">,</span> <span class="n">sample_width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sample_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-</span><span id="TXSoundData-21"><a href="#TXSoundData-21"><span class="linenos">21</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
-</span><span id="TXSoundData-22"><a href="#TXSoundData-22"><span class="linenos">22</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">=</span> <span class="n">sample_rate</span>
-</span><span id="TXSoundData-23"><a href="#TXSoundData-23"><span class="linenos">23</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sample_width</span> <span class="o">=</span> <span class="n">sample_width</span>
-</span><span id="TXSoundData-24"><a href="#TXSoundData-24"><span class="linenos">24</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sample_channels</span> <span class="o">=</span> <span class="n">sample_channels</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="TXSoundData-11"><a href="#TXSoundData-11"><span class="linenos">11</span></a><span class="k">class</span><span class="w"> </span><span class="nc">TXSoundData</span><span class="p">:</span>
+</span><span id="TXSoundData-12"><a href="#TXSoundData-12"><span class="linenos">12</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to encapsulate audio data and its properties.</span>
+</span><span id="TXSoundData-13"><a href="#TXSoundData-13"><span class="linenos">13</span></a>
+</span><span id="TXSoundData-14"><a href="#TXSoundData-14"><span class="linenos">14</span></a><span class="sd">    Args:</span>
+</span><span id="TXSoundData-15"><a href="#TXSoundData-15"><span class="linenos">15</span></a><span class="sd">        data (bytes):</span>
+</span><span id="TXSoundData-16"><a href="#TXSoundData-16"><span class="linenos">16</span></a><span class="sd">            The raw audio byte data.</span>
+</span><span id="TXSoundData-17"><a href="#TXSoundData-17"><span class="linenos">17</span></a><span class="sd">        sample_rate (int, optional):</span>
+</span><span id="TXSoundData-18"><a href="#TXSoundData-18"><span class="linenos">18</span></a><span class="sd">            The sample rate of the audio data. Defaults to 16000 Hz.</span>
+</span><span id="TXSoundData-19"><a href="#TXSoundData-19"><span class="linenos">19</span></a><span class="sd">        sample_width (int, optional):</span>
+</span><span id="TXSoundData-20"><a href="#TXSoundData-20"><span class="linenos">20</span></a><span class="sd">            The sample width in bytes. Defaults to 2 bytes (16-bit audio).</span>
+</span><span id="TXSoundData-21"><a href="#TXSoundData-21"><span class="linenos">21</span></a><span class="sd">        sample_channels (int, optional):</span>
+</span><span id="TXSoundData-22"><a href="#TXSoundData-22"><span class="linenos">22</span></a><span class="sd">            The number of audio channels. Defaults to 1 (mono).</span>
+</span><span id="TXSoundData-23"><a href="#TXSoundData-23"><span class="linenos">23</span></a>
+</span><span id="TXSoundData-24"><a href="#TXSoundData-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="TXSoundData-25"><a href="#TXSoundData-25"><span class="linenos">25</span></a>
-</span><span id="TXSoundData-26"><a href="#TXSoundData-26"><span class="linenos">26</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">write_wav</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="TXSoundData-27"><a href="#TXSoundData-27"><span class="linenos">27</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="TXSoundData-28"><a href="#TXSoundData-28"><span class="linenos">28</span></a><span class="sd">        Writes the audio data to a WAVE file.</span>
-</span><span id="TXSoundData-29"><a href="#TXSoundData-29"><span class="linenos">29</span></a>
-</span><span id="TXSoundData-30"><a href="#TXSoundData-30"><span class="linenos">30</span></a><span class="sd">        Args:</span>
-</span><span id="TXSoundData-31"><a href="#TXSoundData-31"><span class="linenos">31</span></a><span class="sd">            file (string/file-like object): File path to write audio data to.</span>
-</span><span id="TXSoundData-32"><a href="#TXSoundData-32"><span class="linenos">32</span></a><span class="sd">        Returns:</span>
-</span><span id="TXSoundData-33"><a href="#TXSoundData-33"><span class="linenos">33</span></a><span class="sd">            string/file-like object: The file path or file-like object written to.</span>
-</span><span id="TXSoundData-34"><a href="#TXSoundData-34"><span class="linenos">34</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="TXSoundData-35"><a href="#TXSoundData-35"><span class="linenos">35</span></a>        <span class="k">return</span> <span class="n">wave_write</span><span class="p">(</span>
-</span><span id="TXSoundData-36"><a href="#TXSoundData-36"><span class="linenos">36</span></a>            <span class="n">file</span><span class="p">,</span>
-</span><span id="TXSoundData-37"><a href="#TXSoundData-37"><span class="linenos">37</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
-</span><span id="TXSoundData-38"><a href="#TXSoundData-38"><span class="linenos">38</span></a>            <span class="n">sample_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_width</span><span class="p">,</span>
-</span><span id="TXSoundData-39"><a href="#TXSoundData-39"><span class="linenos">39</span></a>            <span class="n">sample_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_channels</span><span class="p">,</span>
-</span><span id="TXSoundData-40"><a href="#TXSoundData-40"><span class="linenos">40</span></a>            <span class="n">sample_rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
-</span><span id="TXSoundData-41"><a href="#TXSoundData-41"><span class="linenos">41</span></a>        <span class="p">)</span>
+</span><span id="TXSoundData-26"><a href="#TXSoundData-26"><span class="linenos">26</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="TXSoundData-27"><a href="#TXSoundData-27"><span class="linenos">27</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a TXSoundData instance.&quot;&quot;&quot;</span>
+</span><span id="TXSoundData-28"><a href="#TXSoundData-28"><span class="linenos">28</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+</span><span id="TXSoundData-29"><a href="#TXSoundData-29"><span class="linenos">29</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">=</span> <span class="n">rate</span>
+</span><span id="TXSoundData-30"><a href="#TXSoundData-30"><span class="linenos">30</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+</span><span id="TXSoundData-31"><a href="#TXSoundData-31"><span class="linenos">31</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="n">channels</span>
+</span><span id="TXSoundData-32"><a href="#TXSoundData-32"><span class="linenos">32</span></a>
+</span><span id="TXSoundData-33"><a href="#TXSoundData-33"><span class="linenos">33</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">write_wav</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="TXSoundData-34"><a href="#TXSoundData-34"><span class="linenos">34</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Write WAVE-encoded audio data to a file path, or file-like object.</span>
+</span><span id="TXSoundData-35"><a href="#TXSoundData-35"><span class="linenos">35</span></a>
+</span><span id="TXSoundData-36"><a href="#TXSoundData-36"><span class="linenos">36</span></a><span class="sd">        Creates mono-channel audio audio at 16kHz, which is what is typically supported</span>
+</span><span id="TXSoundData-37"><a href="#TXSoundData-37"><span class="linenos">37</span></a><span class="sd">        by EdgeTX / OpenTX radios, and is output from audio generated by `Processor`</span>
+</span><span id="TXSoundData-38"><a href="#TXSoundData-38"><span class="linenos">38</span></a><span class="sd">        objects.</span>
+</span><span id="TXSoundData-39"><a href="#TXSoundData-39"><span class="linenos">39</span></a>
+</span><span id="TXSoundData-40"><a href="#TXSoundData-40"><span class="linenos">40</span></a><span class="sd">        Args:</span>
+</span><span id="TXSoundData-41"><a href="#TXSoundData-41"><span class="linenos">41</span></a><span class="sd">            file (string/file-like object):</span>
+</span><span id="TXSoundData-42"><a href="#TXSoundData-42"><span class="linenos">42</span></a><span class="sd">                File path to write audio data to.</span>
+</span><span id="TXSoundData-43"><a href="#TXSoundData-43"><span class="linenos">43</span></a><span class="sd">            output_rate (int, optional):</span>
+</span><span id="TXSoundData-44"><a href="#TXSoundData-44"><span class="linenos">44</span></a><span class="sd">                The sample rate to write the audio data at. Defaults to 16000 Hz.</span>
+</span><span id="TXSoundData-45"><a href="#TXSoundData-45"><span class="linenos">45</span></a>
+</span><span id="TXSoundData-46"><a href="#TXSoundData-46"><span class="linenos">46</span></a><span class="sd">        Returns:</span>
+</span><span id="TXSoundData-47"><a href="#TXSoundData-47"><span class="linenos">47</span></a><span class="sd">            string/file-like object: The file path or file-like object written to.</span>
+</span><span id="TXSoundData-48"><a href="#TXSoundData-48"><span class="linenos">48</span></a>
+</span><span id="TXSoundData-49"><a href="#TXSoundData-49"><span class="linenos">49</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="TXSoundData-50"><a href="#TXSoundData-50"><span class="linenos">50</span></a>        <span class="c1"># Uses ffmpeg via pydub to write the WAV file</span>
+</span><span id="TXSoundData-51"><a href="#TXSoundData-51"><span class="linenos">51</span></a>        <span class="c1"># https://github.com/jiaaro/pydub/blob/master/API.markdown</span>
+</span><span id="TXSoundData-52"><a href="#TXSoundData-52"><span class="linenos">52</span></a>        <span class="n">sound</span> <span class="o">=</span> <span class="n">AudioSegment</span><span class="p">(</span>
+</span><span id="TXSoundData-53"><a href="#TXSoundData-53"><span class="linenos">53</span></a>            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+</span><span id="TXSoundData-54"><a href="#TXSoundData-54"><span class="linenos">54</span></a>            <span class="n">sample_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span>
+</span><span id="TXSoundData-55"><a href="#TXSoundData-55"><span class="linenos">55</span></a>            <span class="n">frame_rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">,</span>
+</span><span id="TXSoundData-56"><a href="#TXSoundData-56"><span class="linenos">56</span></a>            <span class="n">channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span>
+</span><span id="TXSoundData-57"><a href="#TXSoundData-57"><span class="linenos">57</span></a>        <span class="p">)</span>
+</span><span id="TXSoundData-58"><a href="#TXSoundData-58"><span class="linenos">58</span></a>        <span class="n">sound</span><span class="o">.</span><span class="n">export</span><span class="p">(</span>
+</span><span id="TXSoundData-59"><a href="#TXSoundData-59"><span class="linenos">59</span></a>            <span class="n">file</span><span class="p">,</span>
+</span><span id="TXSoundData-60"><a href="#TXSoundData-60"><span class="linenos">60</span></a>            <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">,</span>
+</span><span id="TXSoundData-61"><a href="#TXSoundData-61"><span class="linenos">61</span></a>            <span class="n">bitrate</span><span class="o">=</span><span class="s2">&quot;16k&quot;</span><span class="p">,</span>
+</span><span id="TXSoundData-62"><a href="#TXSoundData-62"><span class="linenos">62</span></a>            <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;-ar&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">output_rate</span><span class="p">)],</span>
+</span><span id="TXSoundData-63"><a href="#TXSoundData-63"><span class="linenos">63</span></a>        <span class="p">)</span>
+</span><span id="TXSoundData-64"><a href="#TXSoundData-64"><span class="linenos">64</span></a>        <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Wrote audio data to &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
+</span><span id="TXSoundData-65"><a href="#TXSoundData-65"><span class="linenos">65</span></a>        <span class="k">return</span> <span class="n">file</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>A class to encapsulate audio data and its properties.</p>
+            <div class="docstring"><p>Class to encapsulate audio data and its properties.</p>
 
 <h6 id="arguments">Arguments:</h6>
 
@@ -203,21 +247,24 @@
                                         <input id="TXSoundData.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
-        <span class="name">TXSoundData</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">data</span>, </span><span class="param"><span class="n">sample_rate</span><span class="o">=</span><span class="mi">16000</span>, </span><span class="param"><span class="n">sample_width</span><span class="o">=</span><span class="mi">2</span>, </span><span class="param"><span class="n">sample_channels</span><span class="o">=</span><span class="mi">1</span></span>)</span>
+        <span class="name">TXSoundData</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">data</span>, </span><span class="param"><span class="n">rate</span><span class="o">=</span><span class="mi">16000</span>, </span><span class="param"><span class="n">width</span><span class="o">=</span><span class="mi">2</span>, </span><span class="param"><span class="n">channels</span><span class="o">=</span><span class="mi">1</span></span>)</span>
 
                 <label class="view-source-button" for="TXSoundData.__init__-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#TXSoundData.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="TXSoundData.__init__-20"><a href="#TXSoundData.__init__-20"><span class="linenos">20</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">,</span> <span class="n">sample_width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sample_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-</span><span id="TXSoundData.__init__-21"><a href="#TXSoundData.__init__-21"><span class="linenos">21</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
-</span><span id="TXSoundData.__init__-22"><a href="#TXSoundData.__init__-22"><span class="linenos">22</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">=</span> <span class="n">sample_rate</span>
-</span><span id="TXSoundData.__init__-23"><a href="#TXSoundData.__init__-23"><span class="linenos">23</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sample_width</span> <span class="o">=</span> <span class="n">sample_width</span>
-</span><span id="TXSoundData.__init__-24"><a href="#TXSoundData.__init__-24"><span class="linenos">24</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sample_channels</span> <span class="o">=</span> <span class="n">sample_channels</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="TXSoundData.__init__-26"><a href="#TXSoundData.__init__-26"><span class="linenos">26</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="TXSoundData.__init__-27"><a href="#TXSoundData.__init__-27"><span class="linenos">27</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a TXSoundData instance.&quot;&quot;&quot;</span>
+</span><span id="TXSoundData.__init__-28"><a href="#TXSoundData.__init__-28"><span class="linenos">28</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+</span><span id="TXSoundData.__init__-29"><a href="#TXSoundData.__init__-29"><span class="linenos">29</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">=</span> <span class="n">rate</span>
+</span><span id="TXSoundData.__init__-30"><a href="#TXSoundData.__init__-30"><span class="linenos">30</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+</span><span id="TXSoundData.__init__-31"><a href="#TXSoundData.__init__-31"><span class="linenos">31</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="n">channels</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Initialize a TXSoundData instance.</p>
+</div>
+
 
                             </div>
                             <div id="TXSoundData.data" class="classattr">
@@ -231,35 +278,35 @@
     
 
                             </div>
-                            <div id="TXSoundData.sample_rate" class="classattr">
+                            <div id="TXSoundData.rate" class="classattr">
                                 <div class="attr variable">
-            <span class="name">sample_rate</span>
+            <span class="name">rate</span>
 
         
     </div>
-    <a class="headerlink" href="#TXSoundData.sample_rate"></a>
+    <a class="headerlink" href="#TXSoundData.rate"></a>
     
     
 
                             </div>
-                            <div id="TXSoundData.sample_width" class="classattr">
+                            <div id="TXSoundData.width" class="classattr">
                                 <div class="attr variable">
-            <span class="name">sample_width</span>
+            <span class="name">width</span>
 
         
     </div>
-    <a class="headerlink" href="#TXSoundData.sample_width"></a>
+    <a class="headerlink" href="#TXSoundData.width"></a>
     
     
 
                             </div>
-                            <div id="TXSoundData.sample_channels" class="classattr">
+                            <div id="TXSoundData.channels" class="classattr">
                                 <div class="attr variable">
-            <span class="name">sample_channels</span>
+            <span class="name">channels</span>
 
         
     </div>
-    <a class="headerlink" href="#TXSoundData.sample_channels"></a>
+    <a class="headerlink" href="#TXSoundData.channels"></a>
     
     
 
@@ -269,37 +316,59 @@
 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">write_wav</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">file</span><span class="p">:</span> <span class="nb">str</span></span><span class="return-annotation">):</span></span>
+        <span class="name">write_wav</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">file</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">output_rate</span><span class="o">=</span><span class="mi">16000</span></span><span class="return-annotation">) -> <span class="nb">str</span>:</span></span>
 
                 <label class="view-source-button" for="TXSoundData.write_wav-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#TXSoundData.write_wav"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="TXSoundData.write_wav-26"><a href="#TXSoundData.write_wav-26"><span class="linenos">26</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">write_wav</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="TXSoundData.write_wav-27"><a href="#TXSoundData.write_wav-27"><span class="linenos">27</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="TXSoundData.write_wav-28"><a href="#TXSoundData.write_wav-28"><span class="linenos">28</span></a><span class="sd">        Writes the audio data to a WAVE file.</span>
-</span><span id="TXSoundData.write_wav-29"><a href="#TXSoundData.write_wav-29"><span class="linenos">29</span></a>
-</span><span id="TXSoundData.write_wav-30"><a href="#TXSoundData.write_wav-30"><span class="linenos">30</span></a><span class="sd">        Args:</span>
-</span><span id="TXSoundData.write_wav-31"><a href="#TXSoundData.write_wav-31"><span class="linenos">31</span></a><span class="sd">            file (string/file-like object): File path to write audio data to.</span>
-</span><span id="TXSoundData.write_wav-32"><a href="#TXSoundData.write_wav-32"><span class="linenos">32</span></a><span class="sd">        Returns:</span>
-</span><span id="TXSoundData.write_wav-33"><a href="#TXSoundData.write_wav-33"><span class="linenos">33</span></a><span class="sd">            string/file-like object: The file path or file-like object written to.</span>
-</span><span id="TXSoundData.write_wav-34"><a href="#TXSoundData.write_wav-34"><span class="linenos">34</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="TXSoundData.write_wav-35"><a href="#TXSoundData.write_wav-35"><span class="linenos">35</span></a>        <span class="k">return</span> <span class="n">wave_write</span><span class="p">(</span>
-</span><span id="TXSoundData.write_wav-36"><a href="#TXSoundData.write_wav-36"><span class="linenos">36</span></a>            <span class="n">file</span><span class="p">,</span>
-</span><span id="TXSoundData.write_wav-37"><a href="#TXSoundData.write_wav-37"><span class="linenos">37</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
-</span><span id="TXSoundData.write_wav-38"><a href="#TXSoundData.write_wav-38"><span class="linenos">38</span></a>            <span class="n">sample_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_width</span><span class="p">,</span>
-</span><span id="TXSoundData.write_wav-39"><a href="#TXSoundData.write_wav-39"><span class="linenos">39</span></a>            <span class="n">sample_channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_channels</span><span class="p">,</span>
-</span><span id="TXSoundData.write_wav-40"><a href="#TXSoundData.write_wav-40"><span class="linenos">40</span></a>            <span class="n">sample_rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">,</span>
-</span><span id="TXSoundData.write_wav-41"><a href="#TXSoundData.write_wav-41"><span class="linenos">41</span></a>        <span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="TXSoundData.write_wav-33"><a href="#TXSoundData.write_wav-33"><span class="linenos">33</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">write_wav</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_rate</span><span class="o">=</span><span class="mi">16000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="TXSoundData.write_wav-34"><a href="#TXSoundData.write_wav-34"><span class="linenos">34</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Write WAVE-encoded audio data to a file path, or file-like object.</span>
+</span><span id="TXSoundData.write_wav-35"><a href="#TXSoundData.write_wav-35"><span class="linenos">35</span></a>
+</span><span id="TXSoundData.write_wav-36"><a href="#TXSoundData.write_wav-36"><span class="linenos">36</span></a><span class="sd">        Creates mono-channel audio audio at 16kHz, which is what is typically supported</span>
+</span><span id="TXSoundData.write_wav-37"><a href="#TXSoundData.write_wav-37"><span class="linenos">37</span></a><span class="sd">        by EdgeTX / OpenTX radios, and is output from audio generated by `Processor`</span>
+</span><span id="TXSoundData.write_wav-38"><a href="#TXSoundData.write_wav-38"><span class="linenos">38</span></a><span class="sd">        objects.</span>
+</span><span id="TXSoundData.write_wav-39"><a href="#TXSoundData.write_wav-39"><span class="linenos">39</span></a>
+</span><span id="TXSoundData.write_wav-40"><a href="#TXSoundData.write_wav-40"><span class="linenos">40</span></a><span class="sd">        Args:</span>
+</span><span id="TXSoundData.write_wav-41"><a href="#TXSoundData.write_wav-41"><span class="linenos">41</span></a><span class="sd">            file (string/file-like object):</span>
+</span><span id="TXSoundData.write_wav-42"><a href="#TXSoundData.write_wav-42"><span class="linenos">42</span></a><span class="sd">                File path to write audio data to.</span>
+</span><span id="TXSoundData.write_wav-43"><a href="#TXSoundData.write_wav-43"><span class="linenos">43</span></a><span class="sd">            output_rate (int, optional):</span>
+</span><span id="TXSoundData.write_wav-44"><a href="#TXSoundData.write_wav-44"><span class="linenos">44</span></a><span class="sd">                The sample rate to write the audio data at. Defaults to 16000 Hz.</span>
+</span><span id="TXSoundData.write_wav-45"><a href="#TXSoundData.write_wav-45"><span class="linenos">45</span></a>
+</span><span id="TXSoundData.write_wav-46"><a href="#TXSoundData.write_wav-46"><span class="linenos">46</span></a><span class="sd">        Returns:</span>
+</span><span id="TXSoundData.write_wav-47"><a href="#TXSoundData.write_wav-47"><span class="linenos">47</span></a><span class="sd">            string/file-like object: The file path or file-like object written to.</span>
+</span><span id="TXSoundData.write_wav-48"><a href="#TXSoundData.write_wav-48"><span class="linenos">48</span></a>
+</span><span id="TXSoundData.write_wav-49"><a href="#TXSoundData.write_wav-49"><span class="linenos">49</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="TXSoundData.write_wav-50"><a href="#TXSoundData.write_wav-50"><span class="linenos">50</span></a>        <span class="c1"># Uses ffmpeg via pydub to write the WAV file</span>
+</span><span id="TXSoundData.write_wav-51"><a href="#TXSoundData.write_wav-51"><span class="linenos">51</span></a>        <span class="c1"># https://github.com/jiaaro/pydub/blob/master/API.markdown</span>
+</span><span id="TXSoundData.write_wav-52"><a href="#TXSoundData.write_wav-52"><span class="linenos">52</span></a>        <span class="n">sound</span> <span class="o">=</span> <span class="n">AudioSegment</span><span class="p">(</span>
+</span><span id="TXSoundData.write_wav-53"><a href="#TXSoundData.write_wav-53"><span class="linenos">53</span></a>            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+</span><span id="TXSoundData.write_wav-54"><a href="#TXSoundData.write_wav-54"><span class="linenos">54</span></a>            <span class="n">sample_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span>
+</span><span id="TXSoundData.write_wav-55"><a href="#TXSoundData.write_wav-55"><span class="linenos">55</span></a>            <span class="n">frame_rate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">,</span>
+</span><span id="TXSoundData.write_wav-56"><a href="#TXSoundData.write_wav-56"><span class="linenos">56</span></a>            <span class="n">channels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span>
+</span><span id="TXSoundData.write_wav-57"><a href="#TXSoundData.write_wav-57"><span class="linenos">57</span></a>        <span class="p">)</span>
+</span><span id="TXSoundData.write_wav-58"><a href="#TXSoundData.write_wav-58"><span class="linenos">58</span></a>        <span class="n">sound</span><span class="o">.</span><span class="n">export</span><span class="p">(</span>
+</span><span id="TXSoundData.write_wav-59"><a href="#TXSoundData.write_wav-59"><span class="linenos">59</span></a>            <span class="n">file</span><span class="p">,</span>
+</span><span id="TXSoundData.write_wav-60"><a href="#TXSoundData.write_wav-60"><span class="linenos">60</span></a>            <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">,</span>
+</span><span id="TXSoundData.write_wav-61"><a href="#TXSoundData.write_wav-61"><span class="linenos">61</span></a>            <span class="n">bitrate</span><span class="o">=</span><span class="s2">&quot;16k&quot;</span><span class="p">,</span>
+</span><span id="TXSoundData.write_wav-62"><a href="#TXSoundData.write_wav-62"><span class="linenos">62</span></a>            <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;-ar&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">output_rate</span><span class="p">)],</span>
+</span><span id="TXSoundData.write_wav-63"><a href="#TXSoundData.write_wav-63"><span class="linenos">63</span></a>        <span class="p">)</span>
+</span><span id="TXSoundData.write_wav-64"><a href="#TXSoundData.write_wav-64"><span class="linenos">64</span></a>        <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Wrote audio data to &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
+</span><span id="TXSoundData.write_wav-65"><a href="#TXSoundData.write_wav-65"><span class="linenos">65</span></a>        <span class="k">return</span> <span class="n">file</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Writes the audio data to a WAVE file.</p>
+            <div class="docstring"><p>Write WAVE-encoded audio data to a file path, or file-like object.</p>
+
+<p>Creates mono-channel audio audio at 16kHz, which is what is typically supported
+by EdgeTX / OpenTX radios, and is output from audio generated by <code>Processor</code>
+objects.</p>
 
 <h6 id="arguments">Arguments:</h6>
 
 <ul>
 <li><strong>file (string/file-like object):</strong>  File path to write audio data to.</li>
+<li><strong>output_rate (int, optional):</strong>  The sample rate to write the audio data at. Defaults to 16000 Hz.</li>
 </ul>
 
 <h6 id="returns">Returns:</h6>

@@ -2,6 +2,6 @@
 
 import logging
 
-logger = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 
-logger.info("Not meant to run like this.")
+_logger.info("Not meant to run like this.")
